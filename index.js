@@ -1,13 +1,13 @@
-const clear = require('clear');
-const chalk = require('chalk');
-const figlet = require('figlet');
+import clear from 'clear';
+import chalk from 'chalk';
+import figlet from 'figlet';
 
-const { askSiteUrl } = require('./lib/inquirer');
-const {
+import { askSiteUrl } from './lib/inquirer.js';
+import {
   prepareDirectory,
   downloadSitemap,
   compareDirectories,
-} = require('./lib/files');
+} from './lib/files.js';
 
 const dir1 = './download1/';
 const dir2 = './download2/';
