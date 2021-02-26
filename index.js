@@ -4,24 +4,37 @@ import figlet from 'figlet';
 
 import { askSiteUrl } from './lib/inquirer.js';
 import {
-  prepareDirectory,
+  createDirectory,
+  fileExists,
+  filesInDirectory,
   downloadSitemap,
+  downloadSites,
   compareDirectories,
 } from './lib/files.js';
 
-const dir1 = './download1/';
-const dir2 = './download2/';
-
 const run = async () => {
-  if (prepareDirectory(dir1)) {
-    const input = await askSiteUrl();
-    downloadSitemap(input.siteUrl, dir1);
-  } else {
-    if (prepareDirectory(dir2)) {
-      const input = await askSiteUrl();
-      await downloadSitemap(input.siteUrl, dir2);
+  const dir1 = './download1/';
+  const dir2 = './download2/';
+
+  const input = await askSiteUrl();
+
+  if (!fileExists(dir1)) {
+    createDirectory(dir1);
+  }
+
+  if (!fileExists(dir2)) {
+    createDirectory(dir2);
+  }
+
+  const sites = await downloadSitemap(input.siteUrl);
+
+  if (filesInDirectory(dir1) === sites.length) {
+    if (filesInDirectory(dir2) !== sites.length) {
+      await downloadSites(sites, dir2);
     }
     compareDirectories(dir1, dir2);
+  } else {
+    downloadSites(sites, dir1);
   }
 };
 
