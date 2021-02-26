@@ -1,6 +1,4 @@
-import clear from 'clear';
 import chalk from 'chalk';
-import figlet from 'figlet';
 import minimist from 'minimist';
 import { askSiteUrl } from './lib/inquirer.js';
 import {
@@ -21,24 +19,15 @@ const run = async () => {
       help: 'h',
     },
   });
-
-  clear();
+  console.log(chalk.yellow('Site-Differ'));
 
   if (args.help) {
-    console.log(
-      chalk.yellow(
-        figlet.textSync('Site-Differ Help', { horizontalLayout: 'full' }),
-      ),
-    );
     console.log('--help: Show this page');
     console.log('--url: URL to the sitemap');
     console.log('--verbose: Output debug information');
     console.log('--cleanup: Remove all download folder before starting');
     return;
   }
-  console.log(
-    chalk.yellow(figlet.textSync('Site-Differ', { horizontalLayout: 'full' })),
-  );
 
   if (args.cleanup) {
     removeDirectory('./downloads');
