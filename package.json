@@ -12,10 +12,10 @@
     "axios": "^0.21.1",
     "chalk": "^4.1.0",
     "clear": "^0.1.0",
-    "clui": "^0.3.6",
     "dir-compare": "^3.0.0",
     "figlet": "^1.5.0",
     "inquirer": "^7.3.3",
+    "ora": "^5.3.0",
     "sitemapper": "^3.1.12"
   },
   "devDependencies": {
