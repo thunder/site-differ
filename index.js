@@ -7,6 +7,7 @@ import {
   createDirectory,
   fileExists,
   filesInDirectory,
+  removeDirectory,
   downloadSitemap,
   downloadSites,
   compareDirectories,
@@ -32,11 +33,16 @@ const run = async () => {
     console.log('--help: Show this page');
     console.log('--url: URL to the sitemap');
     console.log('--verbose: Output debug information');
+    console.log('--cleanup: Remove all download folder before starting');
     return;
   }
   console.log(
     chalk.yellow(figlet.textSync('Site-Differ', { horizontalLayout: 'full' })),
   );
+
+  if (args.cleanup) {
+    removeDirectory('./downloads');
+  }
 
   const input = await askSiteUrl(args);
 
