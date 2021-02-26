@@ -38,10 +38,12 @@ const run = async () => {
     chalk.yellow(figlet.textSync('Site-Differ', { horizontalLayout: 'full' })),
   );
 
-  const dir1 = './download1/';
-  const dir2 = './download2/';
-
   const input = await askSiteUrl(args);
+
+  const urlObject = new URL({ toString: () => input.url });
+
+  const dir1 = './downloads/' + urlObject.host + '_1/';
+  const dir2 = './downloads/' + urlObject.host + '_2/';
 
   if (!fileExists(dir1)) {
     createDirectory(dir1);
