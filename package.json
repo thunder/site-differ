@@ -9,6 +9,7 @@
   "author": "Christian Fritsch",
   "license": "GPL-2",
   "dependencies": {
+    "@supercharge/promise-pool": "^1.6.0",
     "axios": "^0.21.1",
     "chalk": "^4.1.0",
     "dir-compare": "^3.0.0",

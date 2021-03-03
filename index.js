@@ -18,6 +18,9 @@ const run = async () => {
       verbose: 'v',
       help: 'h',
     },
+    default: {
+      concurrency: 20,
+    },
   });
   console.log(chalk.yellow('Site-Differ'));
 
@@ -26,6 +29,7 @@ const run = async () => {
     console.log('--url: URL to the sitemap');
     console.log('--verbose: Output debug information');
     console.log('--cleanup: Remove all download folder before starting');
+    console.log('--concurrency: Concurrent page downloads (Default=20)');
     return;
   }
 
@@ -52,11 +56,11 @@ const run = async () => {
 
   if (filesInDirectory(dir1) === sites.length) {
     if (filesInDirectory(dir2) !== sites.length) {
-      await downloadSites(sites, dir2);
+      await downloadSites(sites, dir2, args.concurrency);
     }
     compareDirectories(dir1, dir2);
   } else {
-    downloadSites(sites, dir1);
+    downloadSites(sites, dir1, args.concurrency);
   }
 };
 
