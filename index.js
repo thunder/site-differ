@@ -2,18 +2,20 @@ import chalk from 'chalk';
 import minimist from 'minimist';
 import { askSiteUrl } from './lib/inquirer.js';
 import {
-  createDirectory,
-  fileExists,
-  filesInDirectory,
-  removeDirectory,
+  compareDirectories,
+  getDirectoryPath,
+  prepareDirectory,
+} from './lib/files.js';
+import {
   downloadSitemap,
   downloadSites,
-  compareDirectories,
-} from './lib/files.js';
+  downloadComplete,
+} from './lib/download.js';
 
 const run = async () => {
   let args = minimist(process.argv.slice(2), {
-    boolean: ['verbose', 'help'],
+    string: ['url'],
+    boolean: ['verbose', 'help', 'cleanup'],
     alias: {
       verbose: 'v',
       help: 'h',
@@ -33,29 +35,17 @@ const run = async () => {
     return;
   }
 
-  if (args.cleanup) {
-    removeDirectory('./downloads');
-  }
-
   const input = await askSiteUrl(args);
 
-  const urlObject = new URL({ toString: () => input.url });
+  const { dir1, dir2 } = getDirectoryPath(input.url);
 
-  const dir1 = './downloads/' + urlObject.host + '_1/';
-  const dir2 = './downloads/' + urlObject.host + '_2/';
-
-  if (!fileExists(dir1)) {
-    createDirectory(dir1);
-  }
-
-  if (!fileExists(dir2)) {
-    createDirectory(dir2);
-  }
+  prepareDirectory(dir1, args.cleanup);
+  prepareDirectory(dir2, args.cleanup);
 
   const sites = await downloadSitemap(input.url, args.verbose);
 
-  if (filesInDirectory(dir1) === sites.length) {
-    if (filesInDirectory(dir2) !== sites.length) {
+  if (downloadComplete(dir1, sites)) {
+    if (!downloadComplete(dir2, sites)) {
       await downloadSites(sites, dir2, args.concurrency);
     }
     compareDirectories(dir1, dir2);
