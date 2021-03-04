@@ -1,6 +1,6 @@
 import chalk from 'chalk';
 import minimist from 'minimist';
-import askSiteUrl from './lib/inquirer.js';
+import askSiteUrl from './lib/question.js';
 import {
   compareDirectories,
   getDirectoryPath,
