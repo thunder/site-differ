@@ -11,11 +11,11 @@ It downloads all pages that are linked in the sitemap.xml before and after the r
 
 Just download this project.
 
-``
+```
 git clone https://github.com/thunder/site-differ.git
 cd site-differ
 npm install
-``
+```
 
 ## Validation
 
