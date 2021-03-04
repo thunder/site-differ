@@ -1,6 +1,6 @@
 import chalk from 'chalk';
 import minimist from 'minimist';
-import { askSiteUrl } from './lib/inquirer.js';
+import askSiteUrl from './lib/inquirer.js';
 import {
   compareDirectories,
   getDirectoryPath,
@@ -13,7 +13,7 @@ import {
 } from './lib/download.js';
 
 const run = async () => {
-  let args = minimist(process.argv.slice(2), {
+  const args = minimist(process.argv.slice(2), {
     string: ['url'],
     boolean: ['verbose', 'help', 'cleanup'],
     alias: {
